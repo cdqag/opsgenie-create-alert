@@ -13,27 +13,28 @@ validate_json() {
     fi
 }
 
-trim() {
-    echo "$1" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+normalize() {
+    x=$(echo "$1" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    echo $x
 }
 
 
-apiUrl=$(trim "${1}")
-apiKey=$(trim "${2}")
-message=$(trim "${3}")
-alias=$(trim "${4}")
-description=$(trim "${5}")
-responders=$(trim "${6}")
-visibleTo=$(trim "${7}")
-actions=$(trim "${8}")
-tags=$(trim "${9}")
-details=$(trim "${10}")
-entity=$(trim "${11}")
-source=$(trim "${12}")
-priority=$(trim "${13}")
-user=$(trim "${14}")
-note=$(trim "${15}")
-verbose=$(trim "${16}")
+apiUrl=$(normalize "${1}")
+apiKey=$(normalize "${2}")
+message=$(normalize "${3}")
+alias=$(normalize "${4}")
+description=$(normalize "${5}")
+responders=$(normalize "${6}")
+visibleTo=$(normalize "${7}")
+actions=$(normalize "${8}")
+tags=$(normalize "${9}")
+details=$(normalize "${10}")
+entity=$(normalize "${11}")
+source=$(normalize "${12}")
+priority=$(normalize "${13}")
+user=$(normalize "${14}")
+note=$(normalize "${15}")
+verbose=$(normalize "${16}")
 
 
 # Init payload
@@ -123,6 +124,7 @@ if [[ -n $note ]]; then
 fi
 
 # Add required message
+echo -n "$message" | od -A n -t x1
 payload+="\"message\":\"$message\""
 
 # Close payload
