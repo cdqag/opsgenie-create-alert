@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Copyright (c) CDQ AG
+# Licensed under the MIT License
+
+set -e
+
 apiUrl=${1}
 apiKey=${2}
 message=${3}
@@ -17,6 +22,15 @@ user=${14}
 note=${15}
 
 
+validate_json() {
+    if ! jq -e . >/dev/null 2>&1 <<<"$2"; then
+        echo "Invalid $1: $2"
+        echo "Please check documentation for correct format: https://docs.opsgenie.com/docs/alert-api#create-alert"
+        exit 1
+    fi
+}
+
+
 # Init payload
 payload='{'
 
@@ -32,26 +46,31 @@ fi
 
 # Support responders
 if [[ -n $responders ]]; then
+    validate_json "responders" "$responders"
     payload+="\"responders\":$responders,"
 fi
 
 # Support visibleTo
 if [[ -n $visibleTo ]]; then
+    validate_json "visibleTo" "$visibleTo"
     payload+="\"visibleTo\":$visibleTo,"
 fi
 
 # Support actions
 if [[ -n $actions ]]; then
+    validate_json "actions" "$actions"
     payload+="\"actions\":$actions,"
 fi
 
 # Support tags
 if [[ -n $tags ]]; then
+    validate_json "tags" "$tags"
     payload+="\"tags\":$tags,"
 fi
 
 # Support details
 if [[ -n $details ]]; then
+    validate_json "details" "$details"
     payload+="\"details\":$details,"
 fi
 
@@ -92,6 +111,7 @@ payload+="\"message\":\"$message\""
 payload+='}'
 
 curl --request POST \
+    --silent \
     --url "${apiUrl}/alert" \
     --header "Authorization: GenieKey ${apiKey}" \
     --header "Content-Type: application/json" \
