@@ -112,20 +112,17 @@ payload+="\"message\":\"$message\""
 payload+='}'
 
 
+curl_command="curl --request POST \
+    --url \"${apiUrl}/alerts\" \
+    --header \"Authorization: GenieKey ${apiKey}\" \
+    --header \"Content-Type: application/json\" \
+    --data \"${payload}\" \
+    --fail"
+
 if [[ $verbose == "true" ]]; then
-    curl --request POST \
-        --verbose \
-        --url "${apiUrl}/alert" \
-        --header "Authorization: GenieKey ${apiKey}" \
-        --header "Content-Type: application/json" \
-        --data "${payload}" \
-        --fail
+    curl_command+=" --verbose"
 else
-    curl --request POST \
-        --silent \
-        --url "${apiUrl}/alert" \
-        --header "Authorization: GenieKey ${apiKey}" \
-        --header "Content-Type: application/json" \
-        --data "${payload}" \
-        --fail
+    curl_command+=" --silent"
 fi
+
+eval "$curl_command"
