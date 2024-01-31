@@ -7,7 +7,7 @@ This GitHub Action creates an alerts in [OpsGenie](https://www.atlassian.com/sof
 ```yaml
 - uses: cdqag/opsgenie-create-alert@v1
   with:
-    api_key: secret
+    apiKey: secret
     message: your message
 ```
 
