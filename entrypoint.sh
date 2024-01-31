@@ -13,7 +13,7 @@ validate_json() {
     fi
 }
 
-trim_whitspace() {
+trim_whitespace() {
     echo "$1" | xargs
 }
 
