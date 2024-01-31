@@ -34,9 +34,7 @@ This GitHub Action creates an alerts in [OpsGenie](https://www.atlassian.com/sof
 
 Please note that fields that are _arrays_ or _objects_ should be valid JSON arrays/objects. See examples below.
 
-### Examples
-
-#### Send a message with tags, on job failure, using secret
+### Example
 
 ```yaml
 name: Example
@@ -60,8 +58,13 @@ jobs:
         uses: cdqag/opsgenie-create-alert@v1
         with:
           apiKey: ${{ secrets.OPSGENIE_API_KEY }}
-          message: "Run has failed: ${RUN_URL}"
+          message: "${{ github.workflow }} #${{ github.run_number }} failed"
+          description: | # Description supports HTML (according to OpsGenie specs)
+            Run number ${{ github.run_number }} of workflow <i>${{ github.workflow }}</i> has failed!<br>
+            <a href="${{ env.RUN_URL }}" target="_blank">Open run in new window</a>  
           tags: '["tag1", "tag2"]'  # Note that this is an JSON array but between apostophes. You can use doublequotes, but you will need to do the escaping.
+          verbose: "true"  # For debugging purposes you can enable verbose mode for curl (which is used under the hood)
+          
  
 ```
 
