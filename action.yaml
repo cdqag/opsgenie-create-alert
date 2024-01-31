@@ -1,6 +1,11 @@
 name: 'OpsGenie Create Alert'
 description: 'Create an alert in OpsGenie'
 
+author: "CDQ AG"
+branding:
+  icon: 'user-check'
+  color: 'blue'
+
 # Based on https://docs.opsgenie.com/docs/alert-api#create-alert
 inputs:
   apiUrl:
