@@ -30,10 +30,13 @@ This GitHub Action creates an alerts in [OpsGenie](https://www.atlassian.com/sof
 | `priority`    | No       | Priority level of the alert. Default value is P3.                                                                      | Possible values: P1, P2, P3, P4, P5       |
 | `user`        | No       | Display name of the request owner                                                                                      | 100 characters                            |
 | `note`        | No       | Additional note that will be added while creating the alert                                                            | 25000 characters                          |
+| `verbose`     | No       | Enable verbose mode for _curl_                                                                                         |                                           |
+
+Please note that fields that are _arrays_ or _objects_ should be valid JSON arrays/objects. See examples below.
 
 ### Examples
 
-#### Send a message on job failure using secret
+#### Send a message with tags, on job failure, using secret
 
 ```yaml
 name: Example
@@ -41,8 +44,11 @@ name: Example
 on:
   workflow_dispatch:
 
+env:
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 jobs:
-  prepare:
+  example_job:
     runs-on: ubuntu-latest
 
     steps:
@@ -50,14 +56,14 @@ jobs:
           echo "Oh no!"
           exit 1
 
-      - uses: cdqag/opsgenie-create-alert@v1
+      - if: failure()
+        uses: cdqag/opsgenie-create-alert@v1
         with:
           apiKey: ${{ secrets.OPSGENIE_API_KEY }}
-          message: "Hello world"
-          tags: '["tag1", "tag2"]'
+          message: "Run has failed: ${RUN_URL}"
+          tags: '["tag1", "tag2"]'  # Note that this is an JSON array but between apostophes. You can use doublequotes, but you will need to do the escaping.
  
 ```
-
 
 ## Resources
 
