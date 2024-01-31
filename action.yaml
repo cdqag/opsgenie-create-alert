@@ -65,87 +65,21 @@ inputs:
     required: false
 
 runs:
-  using: "composite"
-  steps:
-    - shell: bash
-      run: |
-        # Init payload
-        payload='{'
-        \
-        # Support alias
-        if [[ -n ${{ inputs.alias }} ]]; then
-          payload+="\"alias\":\"${{ inputs.alias }}\","
-        fi
-        \
-        # Support description
-        if [[ -n ${{ inputs.description }} ]]; then
-          payload+="\"description\":\"${{ inputs.description }}\","
-        fi
-        \
-        # Support responders
-        if [[ -n ${{ inputs.responders }} ]]; then
-          payload+="\"responders\":${{ inputs.responders }},"
-        fi
-        \
-        # Support visibleTo
-        if [[ -n ${{ inputs.visibleTo }} ]]; then
-          payload+="\"visibleTo\":${{ inputs.visibleTo }},"
-        fi
-        \
-        # Support actions
-        if [[ -n ${{ inputs.actions }} ]]; then
-          payload+="\"actions\":${{ inputs.actions }},"
-        fi
-        \
-        # Support tags
-        if [[ -n ${{ inputs.tags }} ]]; then
-          payload+="\"tags\":${{ inputs.tags }},"
-        fi
-        \
-        # Support details
-        if [[ -n ${{ inputs.details }} ]]; then
-          payload+="\"details\":${{ inputs.details }},"
-        fi
-        \
-        # Support entity
-        if [[ -n ${{ inputs.entity }} ]]; then
-          payload+="\"entity\":\"${{ inputs.entity }}\","
-        fi
-        \
-        # Support source
-        if [[ -n ${{ inputs.source }} ]]; then
-          payload+="\"source\":\"${{ inputs.source }}\","
-        fi
-        \
-        # Support priority
-        if [[ -n ${{ inputs.priority }} ]]; then
-          if [[ ${{ inputs.priority }} =~ ^(P1|P2|P3|P4|P5)$ ]]; then
-            payload+="\"priority\":\"${{ inputs.priority }}\","
-          else
-            echo "Invalid priority: ${{ inputs.priority }}"
-            exit 1
-          fi
-        fi
-        \
-        # Support user
-        if [[ -n ${{ inputs.user }} ]]; then
-          payload+="\"user\":\"${{ inputs.user }}\","
-        fi
-        \
-        # Support note
-        if [[ -n ${{ inputs.note }} ]]; then
-          payload+="\"note\":\"${{ inputs.note }}\","
-        fi
-        \
-        # Add required message
-        payload+="\"message\":\"${{ inputs.message }}\""
-        \
-        # Close payload
-        payload+='}'
-        \
-        curl --request POST \
-        --url "${{ inputs.apiUrl }}/alert" \
-        --header "Authorization: GenieKey ${{ inputs.apiKey }}" \
-        --header "Content-Type: application/json" \
-        --data "${{ inputs.payload }}" \
-        --fail
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.apiUrl }}
+    - ${{ inputs.apiKey }}
+    - ${{ inputs.message }}
+    - ${{ inputs.alias }}
+    - ${{ inputs.description }}
+    - ${{ inputs.responders }}
+    - ${{ inputs.visibleTo }}
+    - ${{ inputs.actions }}
+    - ${{ inputs.tags }}
+    - ${{ inputs.details }}
+    - ${{ inputs.entity }}
+    - ${{ inputs.source }}
+    - ${{ inputs.priority }}
+    - ${{ inputs.user }}
+    - ${{ inputs.note }}
