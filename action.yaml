@@ -69,6 +69,11 @@ inputs:
     description: 'Additional note that will be added while creating the alert. (Limit: 25000 characters)'
     required: false
 
+  verbose:
+    description: 'Enable curl verbose output'
+    default: "false"
+    required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -88,3 +93,4 @@ runs:
     - ${{ inputs.priority }}
     - ${{ inputs.user }}
     - ${{ inputs.note }}
+    - ${{ inputs.verbose }}

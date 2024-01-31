@@ -20,6 +20,7 @@ source=${12}
 priority=${13}
 user=${14}
 note=${15}
+verbose=${16}
 
 
 validate_json() {
@@ -110,10 +111,21 @@ payload+="\"message\":\"$message\""
 # Close payload
 payload+='}'
 
-curl --request POST \
-    --silent \
-    --url "${apiUrl}/alert" \
-    --header "Authorization: GenieKey ${apiKey}" \
-    --header "Content-Type: application/json" \
-    --data "${payload}" \
-    --fail
+
+if [[ $verbose == "true" ]]; then
+    curl --request POST \
+        --verbose \
+        --url "${apiUrl}/alert" \
+        --header "Authorization: GenieKey ${apiKey}" \
+        --header "Content-Type: application/json" \
+        --data "${payload}" \
+        --fail
+else
+    curl --request POST \
+        --silent \
+        --url "${apiUrl}/alert" \
+        --header "Authorization: GenieKey ${apiKey}" \
+        --header "Content-Type: application/json" \
+        --data "${payload}" \
+        --fail
+fi
