@@ -18,6 +18,11 @@ normalize() {
     echo $x
 }
 
+escape_json() {
+    x=$(echo "$1" | sed -e 's/"/\\"/g')
+    echo $x
+}
+
 
 apiUrl=$(normalize "${1}")
 apiKey=$(normalize "${2}")
@@ -47,6 +52,7 @@ fi
 
 # Support description
 if [[ -n $description ]]; then
+    description=$(escape_json "$description")
     payload+="\"description\":\"$description\","
 fi
 
@@ -120,11 +126,12 @@ payload+="\"user\":\"$user\","
 
 # Support note
 if [[ -n $note ]]; then
+    note=$(escape_json "$note")
     payload+="\"note\":\"$note\","
 fi
 
 # Add required message
-echo -n "$message" | od -A n -t x1
+message=$(escape_json "$message")
 payload+="\"message\":\"$message\""
 
 # Close payload
