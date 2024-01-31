@@ -76,16 +76,15 @@ fi
 # Support details
 if [[ -z $details ]]; then
     details='{'
+    details+="\"workflow\":\"$GITHUB_WORKFLOW\","
+    details+="\"runId\":\"$GITHUB_RUN_ID\","
+    details+="\"runNumber\":\"$GITHUB_RUN_NUMBER\","
     details+="\"action\":\"$GITHUB_ACTION\","
     details+="\"actor\":\"$GITHUB_ACTOR\","
     details+="\"eventName\":\"$GITHUB_EVENT_NAME\","
-    details+="\"eventPath\":\"$GITHUB_EVENT_PATH\","
-    details+="\"ref\":\"$GITHUB_REF\","
     details+="\"repository\":\"$GITHUB_REPOSITORY\","
-    details+="\"sha\":\"$GITHUB_SHA\","
-    details+="\"workflow\":\"$GITHUB_WORKFLOW\","
-    details+="\"runNumber\":\"$GITHUB_RUN_NUMBER\","
-    details+="\"runId\":\"$GITHUB_RUN_ID\""
+    details+="\"ref\":\"$GITHUB_REF\","
+    details+="\"sha\":\"$GITHUB_SHA\""
     details+='}'
 fi
 validate_json "details" "$details"
