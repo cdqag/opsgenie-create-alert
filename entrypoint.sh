@@ -5,24 +5,6 @@
 
 set -e
 
-apiUrl=${1}
-apiKey=${2}
-message=${3}
-alias=${4}
-description=${5}
-responders=${6}
-visibleTo=${7}
-actions=${8}
-tags=${9}
-details=${10}
-entity=${11}
-source=${12}
-priority=${13}
-user=${14}
-note=${15}
-verbose=${16}
-
-
 validate_json() {
     if ! jq -e . >/dev/null 2>&1 <<<"$2"; then
         echo "Invalid $1: $2"
@@ -30,6 +12,28 @@ validate_json() {
         exit 1
     fi
 }
+
+trim_whitspace() {
+    echo "$1" | xargs
+}
+
+
+apiUrl=$(trim_whitespace "${1}")
+apiKey=$(trim_whitespace "${2}")
+message=$(trim_whitespace "${3}")
+alias=$(trim_whitespace "${4}")
+description=$(trim_whitespace "${5}")
+responders=$(trim_whitespace "${6}")
+visibleTo=$(trim_whitespace "${7}")
+actions=$(trim_whitespace "${8}")
+tags=$(trim_whitespace "${9}")
+details=$(trim_whitespace "${10}")
+entity=$(trim_whitespace "${11}")
+source=$(trim_whitespace "${12}")
+priority=$(trim_whitespace "${13}")
+user=$(trim_whitespace "${14}")
+note=$(trim_whitespace "${15}")
+verbose=$(trim_whitespace "${16}")
 
 
 # Init payload
