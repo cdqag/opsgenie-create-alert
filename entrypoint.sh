@@ -13,27 +13,27 @@ validate_json() {
     fi
 }
 
-trim_whitespace() {
-    echo "$1" | xargs
+trim() {
+    echo "$1" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 }
 
 
-apiUrl=$(trim_whitespace "${1}")
-apiKey=$(trim_whitespace "${2}")
-message=$(trim_whitespace "${3}")
-alias=$(trim_whitespace "${4}")
-description=$(trim_whitespace "${5}")
-responders=$(trim_whitespace "${6}")
-visibleTo=$(trim_whitespace "${7}")
-actions=$(trim_whitespace "${8}")
-tags=$(trim_whitespace "${9}")
-details=$(trim_whitespace "${10}")
-entity=$(trim_whitespace "${11}")
-source=$(trim_whitespace "${12}")
-priority=$(trim_whitespace "${13}")
-user=$(trim_whitespace "${14}")
-note=$(trim_whitespace "${15}")
-verbose=$(trim_whitespace "${16}")
+apiUrl=$(trim "${1}")
+apiKey=$(trim "${2}")
+message=$(trim "${3}")
+alias=$(trim "${4}")
+description=$(trim "${5}")
+responders=$(trim "${6}")
+visibleTo=$(trim "${7}")
+actions=$(trim "${8}")
+tags=$(trim "${9}")
+details=$(trim "${10}")
+entity=$(trim "${11}")
+source=$(trim "${12}")
+priority=$(trim "${13}")
+user=$(trim "${14}")
+note=$(trim "${15}")
+verbose=$(trim "${16}")
 
 
 # Init payload
@@ -116,17 +116,27 @@ payload+="\"message\":\"$message\""
 payload+='}'
 
 
-curl_command="curl --request POST \
-    --url \"${apiUrl}/alerts\" \
-    --header \"Authorization: GenieKey ${apiKey}\" \
-    --header \"Content-Type: application/json\" \
-    --data \"${payload}\" \
-    --fail"
+req_type="POST"
+req_url="${apiUrl}/alerts"
+req_header_auth="Authorization: GenieKey ${apiKey}"
+req_header_content="Content-Type: application/json"
+
+# Note: Simplyfing it using string concatenation and eval breaks the JSON payload
 
 if [[ $verbose == "true" ]]; then
-    curl_command+=" --verbose"
+    curl --request "${req_type}" \
+        --url "${req_url}" \
+        --header "${req_header_auth}" \
+        --header "${req_header_content}" \
+        --data "${payload}" \
+        --fail \
+        --verbose
 else
-    curl_command+=" --silent"
+    curl --request "${req_type}" \
+        --url "${req_url}" \
+        --header "${req_header_auth}" \
+        --header "${req_header_content}" \
+        --data "${payload}" \
+        --fail \
+        --silent
 fi
-
-eval "$curl_command"
