@@ -1,0 +1,12 @@
+name: Update Major Tag
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  update-majorver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cdqag/update-majorver@v1
