@@ -1,7 +1,7 @@
 # Copyright (c) CDQ AG
 # Licensed under the MIT License
 
-FROM alpine:3.19@sha256:6380aa6b04faa579332d4c9d1f65bd7093012ba6e01d9bbcd5e2d8a4f9fae38f
+FROM alpine:3.21@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099
 
 LABEL org.opencontainers.image.authors="Marek Sierociński" \
     org.opencontainers.image.url="https://github.com/cdqag/opsgenie-create-alert" \
