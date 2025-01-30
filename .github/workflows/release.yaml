@@ -7,4 +7,4 @@ on:
 
 jobs:
   release:
-    uses: cdqag/workflow-public/.github/workflows/release-action.yaml@v1
+    uses: cdqag/workflow-public/.github/workflows/release-action.yaml@a2d8fe29e69fa8d10cf4ff96490dc2f5be9bd47c # v1
