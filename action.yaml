@@ -75,22 +75,25 @@ inputs:
     required: false
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.apiUrl }}
-    - ${{ inputs.apiKey }}
-    - ${{ inputs.message }}
-    - ${{ inputs.alias }}
-    - ${{ inputs.description }}
-    - ${{ inputs.responders }}
-    - ${{ inputs.visibleTo }}
-    - ${{ inputs.actions }}
-    - ${{ inputs.tags }}
-    - ${{ inputs.details }}
-    - ${{ inputs.entity }}
-    - ${{ inputs.source }}
-    - ${{ inputs.priority }}
-    - ${{ inputs.user }}
-    - ${{ inputs.note }}
-    - ${{ inputs.verbose }}
+  using: composite
+  steps:
+    - run: './src/alert.sh'
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      env:
+        input_apiUrl: ${{ inputs.apiUrl }}
+        input_apiKey: ${{ inputs.apiKey }}
+        input_message: ${{ inputs.message }}
+        input_alias: ${{ inputs.alias }}
+        input_description: ${{ inputs.description }}
+        input_responders: ${{ inputs.responders }}
+        input_visibleTo: ${{ inputs.visibleTo }}
+        input_actions: ${{ inputs.actions }}
+        input_tags: ${{ inputs.tags }}
+        input_details: ${{ inputs.details }}
+        input_entity: ${{ inputs.entity }}
+        input_source: ${{ inputs.source }}
+        input_priority: ${{ inputs.priority }}
+        input_user: ${{ inputs.user }}
+        input_note: ${{ inputs.note }}
+        input_verbose: ${{ inputs.verbose }}
