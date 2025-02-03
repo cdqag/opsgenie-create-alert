@@ -58,7 +58,7 @@ teardown() {
 	local note=""
 	local message="test-message"
 
-	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note"
+	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note" "$message"
 
 	assert_failure
 	assert_output "[ERROR] Invalid JSON in field 'responders': Provided JSON: 'foobar' is invalid. Please check documentation for correct format: https://docs.opsgenie.com/docs/alert-api#create-alert"
@@ -79,7 +79,7 @@ teardown() {
 	local note=""
 	local message="test-message"
 
-	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note"
+	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note" "$message"
 
 	assert_failure
 	assert_output "[ERROR] Invalid JSON in field 'visibleTo': Provided JSON: 'foobar' is invalid. Please check documentation for correct format: https://docs.opsgenie.com/docs/alert-api#create-alert"
@@ -100,7 +100,7 @@ teardown() {
 	local note=""
 	local message="test-message"
 
-	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note"
+	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note" "$message"
 
 	assert_failure
 	assert_output "[ERROR] Invalid JSON in field 'actions': Provided JSON: 'foobar' is invalid. Please check documentation for correct format: https://docs.opsgenie.com/docs/alert-api#create-alert"
@@ -121,7 +121,7 @@ teardown() {
 	local note=""
 	local message="test-message"
 
-	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note"
+	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note" "$message"
 
 	assert_failure
 	assert_output "[ERROR] Invalid JSON in field 'tags': Provided JSON: 'foobar' is invalid. Please check documentation for correct format: https://docs.opsgenie.com/docs/alert-api#create-alert"
@@ -142,7 +142,7 @@ teardown() {
 	local note=""
 	local message="test-message"
 
-	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note"
+	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note" "$message"
 
 	assert_failure
 	assert_output "[ERROR] Invalid JSON in field 'details': Provided JSON: 'foobar' is invalid. Please check documentation for correct format: https://docs.opsgenie.com/docs/alert-api#create-alert"
@@ -163,7 +163,7 @@ teardown() {
 	local note="test-note"
 	local message="test-message"
 
-	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note"
+	run get_payload "$alias" "$description" "$responders" "$visibleTo" "$actions" "$tags" "$details" "$entity" "$source" "$priority" "$user" "$note" "$message"
 
 	assert_success
 	assert_output '{"alias":"test-alias","description":"test-description","responders":[{"id":"test-responder-id","type":"team"}],"visibleTo":[{"id":"test-visibleTo-id","type":"team"}],"actions":[{"name":"test-action-name","type":"test-action-type","integrationId":"test-action-integrationId"}],"tags":["test-tag1","test-tag2"],"details":{"test-detail-key":"test-detail-value"},"entity":"test-entity","source":"test-source","priority":"P1","user":"test-user","note":"test-note","message":"test-message"}'
