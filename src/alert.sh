@@ -4,7 +4,7 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$@")" >/dev/null 2>&1 && pwd)"
+export SCRIPT_DIR="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"
 
 source "$SCRIPT_DIR/helpers/log_helpers.sh"
 source "$SCRIPT_DIR/payload.sh"
@@ -32,8 +32,6 @@ input_user=$(trim "$input_user")
 input_note=$(trim "$input_note")
 input_message=$(trim "$input_message")
 
-input_verbose=$(trim "$input_verbose")
-
 log_debug "Preparing request..."
 req_type="POST"
 req_url="${input_apiUrl}/alerts"
@@ -57,14 +55,14 @@ payload=$(get_payload \
 )
 
 log_debug "Sending request..."
-if [[ $input_verbose == "true" ]]; then
+if [[ -n $RUNNER_DEBUG ]]; then
 	curl --request "${req_type}" \
 		--url "${req_url}" \
 		--header "${req_header_auth}" \
 		--header "${req_header_content}" \
 		--data "${payload}" \
 		--fail \
-		--verbose
+		-vvv
 else
 	curl --request "${req_type}" \
 		--url "${req_url}" \

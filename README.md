@@ -2,6 +2,13 @@
 
 This GitHub Action creates an alerts in [OpsGenie](https://www.atlassian.com/software/opsgenie).
 
+## Pre-requisites
+
+To use this GitHub Action, you need to have:
+
+* an OpsGenie account and an API key
+* have following tools installed on your runner: jq, curl (both are usually pre-installed on GitHub-hosted runners, but you might need to install them on self-hosted runners)
+
 ## Usage
 
 ```yaml
@@ -30,7 +37,6 @@ This GitHub Action creates an alerts in [OpsGenie](https://www.atlassian.com/sof
 | `priority`    | No       | Priority level of the alert. Default value is P3.                                                                      | Possible values: P1, P2, P3, P4, P5       |
 | `user`        | No       | Display name of the request owner                                                                                      | 100 characters                            |
 | `note`        | No       | Additional note that will be added while creating the alert                                                            | 25000 characters                          |
-| `verbose`     | No       | Enable verbose mode for _curl_                                                                                         |                                           |
 
 Please note that fields that are _arrays_ or _objects_ should be valid JSON arrays/objects. See examples below.
 
@@ -63,10 +69,15 @@ jobs:
             Run number ${{ github.run_number }} of workflow <i>${{ github.workflow }}</i> has failed!<br>
             <a href="${{ env.RUN_URL }}" target="_blank">Open run in new window</a>  
           tags: '["tag1", "tag2"]'  # Note that this is an JSON array but between apostophes. You can use doublequotes, but you will need to do the escaping.
-          verbose: "true"  # For debugging purposes you can enable verbose mode for curl (which is used under the hood)
           
  
 ```
+
+### Debugging
+
+To see the debug logs (for _curl_ too), you can either click checkbox _Enable debug logging_ while re-running the failed job
+or you can enable debugging for whole repo by adding the following secret to your repository: `ACTIONS_STEP_DEBUG` with value `true`.
+You can read more about it [here](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging).
 
 ## Resources
 

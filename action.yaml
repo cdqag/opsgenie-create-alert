@@ -69,11 +69,6 @@ inputs:
     description: 'Additional note that will be added while creating the alert. (Limit: 25000 characters)'
     required: false
 
-  verbose:
-    description: 'Enable curl verbose output'
-    default: "false"
-    required: false
-
 runs:
   using: composite
   steps:
@@ -96,4 +91,3 @@ runs:
         input_priority: ${{ inputs.priority }}
         input_user: ${{ inputs.user }}
         input_note: ${{ inputs.note }}
-        input_verbose: ${{ inputs.verbose }}

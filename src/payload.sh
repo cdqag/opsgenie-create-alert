@@ -4,7 +4,7 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$@")" >/dev/null 2>&1 && pwd)"
+# SCRIPT_DIR="$(cd "$(dirname "$@")" >/dev/null 2>&1 && pwd)"
 
 source "$SCRIPT_DIR/helpers/log_helpers.sh"
 source "$SCRIPT_DIR/helpers/json_helpers.sh"
