@@ -1,4 +1,4 @@
-# OpsGenie Create Alert
+# Action OpsGenie Create Alert
 
 This GitHub Action creates an alerts in [OpsGenie](https://www.atlassian.com/software/opsgenie).
 
@@ -12,7 +12,7 @@ To use this GitHub Action, you need to have:
 ## Usage
 
 ```yaml
-- uses: cdqag/opsgenie-create-alert@v1
+- uses: cdqag/action-opsgenie-create-alert@v1
   with:
     apiKey: secret
     message: your message
