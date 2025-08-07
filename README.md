@@ -61,7 +61,7 @@ jobs:
           exit 1
 
       - if: failure()
-        uses: cdqag/opsgenie-create-alert@v1
+        uses: cdqag/action-opsgenie-create-alert@v1
         with:
           apiKey: ${{ secrets.OPSGENIE_API_KEY }}
           message: "${{ github.workflow }} #${{ github.run_number }} failed"
